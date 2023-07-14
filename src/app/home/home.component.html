@@ -1,0 +1,216 @@
+<div class="z-50 min-h-screen md:h-screen  bg-fuchsia-500" style="background-image: url(../../assets/bg-4.jpg); background-repeat: no-repeat; background-size: cover; ">
+  <nav class=" text-white h-20 to-cyan-800">
+    <div class="w-full flex justify-between md:justify-around p-5 backdrop-blur-md  bg-black/30 items-center">
+      <h1 class=" text-transparent text-lg md:text-2xl bg-clip-text bg-gradient-to-r from-blue-700 to-orange-500  flex flex-col font-semibold "><span>The weather</span> <span class="-mt-3">Forcating</span></h1>
+      <div class="text-transparent text-lg md:text-2xl bg-clip-text bg-gradient-to-r from-red-600 to-white  flex flex-col font-semibold">
+        <p>{{date|date : 'dd-MM-yyyy'}}</p>
+        <p>{{date|date : 'HH:mm:ss'}}</p></div>
+    </div>
+    </nav>
+    <div class="relative">
+      <input [(ngModel)]="userInput" name="userInput" (ngModelChange)="this.userSearch.next($event)" class="w-[90%] ml-5 mt-6 md:mt-10 md:ml-24 relative text-white p-3 z-40 border bg-transparent overflow-hidden placeholder:text-white backdrop-blur-md outline-none  border-white rounded-full" type="text" placeholder="Search place">
+      <div (click)="myLocation()" class="">
+
+      </div>
+      <div class="absolute md:ml-1 md:mt-0 ml-[-90px] mt-[-22px] backdrop-blur-lg top-24 z-20 bg-black/50  left-28 text-white">
+          <p (click)="getDeatails(item)" class="px-4 pl-5 pr-64 md:w-[1600px]  p-1 border-b-2" *ngFor="let item of places">{{item.name}}</p>
+      </div>
+    </div>
+    <img src="" alt="">
+
+    <div *ngIf="current" class="ml-3 items-center justify-center md:mt-12 mt-14 md:flex md:space-y-0 space-y-5 md:space-x-5 ">
+      <!-- box-1 -->
+      <div class=" md:w-[600px] w-[385px] md:h-[650px]  h-[700px] bg-slate-700/50 backdrop-blur rounded-2xl">
+       <br> <p class="mt-0 text-3xl text-white ml-14 md:ml-36 font-semibold">CURRENT WHETHER</p>
+       <div class="md:flex-row rounded-xl px-5 flex-col flex gap-4 md:gap-5 md:justify-between items-center">
+        <div class="flex">
+          <div class="flex items-center flex-col">
+            <p class="text-4xl font-medium text-orange-500">{{current.name}}</p>
+            <!-- <p class="text-lg">{{today | date :'HH:mm:ss'}}</p> -->
+          </div>
+        </div>
+        <div class="flex">
+          <div class="flex items-center flex-col">
+            <p class="text-4xl font-semibold">{{current.main.temp}}℃</p>
+            <p class="text-lg">{{current.weather[0].description}}</p>
+          </div>
+        </div>
+        <div>
+        <img class="-my-4 object-cover" src="../../../assets/{{current.weather[0].icon}}.png" alt="">
+        </div>
+      </div>
+  <p class="mt-5 ml-28 md:ml-48 text-xl md:text-2xl font-normal text-white">AIR CONDITON</p>
+<div class="flex ml-[-10px] md:ml-10 md:space-x-20">
+  <div class="ml-10 mt-6 text-lg font-normal text-white">
+    <p>Feel</p>
+    <p>{{current.main.feels_like | number:'1.0-0'}}℃</p>
+  </div>
+  <div class="ml-10 mt-6 text-lg font-normal text-white">
+    <p>wind</p>
+    <p>{{current.wind.speed}}</p>
+  </div>
+  <div class="ml-10 mt-6 text-lg font-normal text-white">
+    <p>Clouds</p>
+    <p class="ml-3">{{current.clouds.all}}%</p>
+  </div>
+  <div class="ml-10 mt-6 text-lg font-normal text-white">
+    <p>Humidity</p>
+    <p class="ml-5">{{current.main.humidity}}%</p>
+  </div>
+</div>
+
+<div class="flex  flex-col gap-5">
+  <p class="mt-16 ml-24 md:ml-44 text-xl md:text-2xl font-normal text-white">TODAY'S FORCAST</p>
+
+  <div class="md:flex-row text-sm sm:text-lg overflow-hidden flex gap-1 justify-evenly sm:px-5 p-1 items-center md:px-10">
+    <div *ngFor="let item of todaysforcast" class="flex overflow-hidden">
+      <div  class="flex items-center flex-col">
+        <p class="text-white ">{{item.dt_txt | date:'HH:MM'}}</p>
+         <img class="w-16" src="../../assets/cloud-3.png" alt="">
+        <p class="text-white ">{{item.weather[0].description}}</p>
+      </div>
+    </div>
+  </div>
+</div>
+      </div>
+<!-- box-2 -->
+<div class=" md:w-[600px] w-[385px] h-max bg-slate-700/50 backdrop-blur rounded-2xl pb-5">
+  <br> <p class="mt-0 text-2xl text-white ml-20 md:ml-48 font-semibold">WEEKLY FORCAST</p>
+  <div>
+<div class="space-y-5 mt-5 flex flex-col " *ngFor="let item of weeklyforcast">
+<!-- card-1 -->
+  <div class="bg-slate-700  ml-4 md:ml-8 md:w-[530px] rounded-md w-[355px] h-24" >
+    <div class="ml-7 pt-6">
+      <p class="font-semibold text-white">{{item.dt_txt| date: 'EEEE'}}</p>
+      <img class="md:w-10 w-8 ml-[-10px] md:ml-[-10px] " src="../../assets/{{item.weather[0].icon}}.png" alt="">
+      <p class="font-extralight text-white ml-7 md:ml-9 md:mt-[-33px] mt-[-30px]">{{item.weather[0].description}}</p>
+    </div>
+    <div class="md:ml-64 ml-44  mt-[-70px]">
+      <div class="flex mt-2">
+        <img class="w-7 md:w-9" src="../../assets/My project.png" alt="">
+        <p class="text-white md:mt-1 text-sm">{{item.main.temp}}℃</p>
+      </div>
+      <div class="flex mt-4 md:mt-2">
+        <img class="w-7 md:w-9" src="../../assets/My project (1).png" alt="">
+        <p class="text-white md:mt-1 ml-2 text-sm">{{item.clouds.all}}%</p>
+      </div>
+    </div>
+    <div class="md:ml-96 ml-64  mt-[-72px]">
+      <div class="flex mt-2">
+        <img class="w-7 md:w-9" src="../../assets/My project (2).png" alt="">
+        <p class="text-white md:mt-1 text-sm">{{item.wind.speed}}M/s</p>
+      </div>
+      <div class="flex mt-4 md:mt-0">
+        <img class="w-7 md:w-9" src="../../assets/My project (3).png" alt="">
+        <p class="text-white md:mt-1 text-sm">{{item.main.humidity}}%</p>
+      </div>
+    </div>
+    <div>
+
+    </div>
+  </div>
+
+</div>
+<!-- <div class="bg-slate-700/50  ml-4 md:ml-8 md:w-[530px] rounded-md w-[355px] h-24">
+  <div class="ml-7 pt-6">
+    <p class="font-semibold text-white">Wednesday</p>
+    <img class="md:w-10 w-8 ml-[-10px] md:ml-[-10px] " src="../../assets/cloud-3.png" alt="">
+    <p class="font-extralight text-white ml-7 md:ml-9 md:mt-[-33px] mt-[-30px]">light rain</p>
+  </div>
+  <div class="md:ml-64 ml-44  mt-[-70px]">
+    <div class="flex mt-2">
+      <img class="w-7 md:w-9" src="../../assets/My project.png" alt="">
+      <p class="text-white md:mt-1 text-sm">20.28℃</p>
+    </div>
+    <div class="flex mt-4 md:mt-2">
+      <img class="w-7 md:w-9" src="../../assets/My project (1).png" alt="">
+      <p class="text-white md:mt-1 text-sm">20.28℃</p>
+    </div>
+  </div>
+  <div class="md:ml-96 ml-64  mt-[-72px]">
+    <div class="flex mt-2">
+      <img class="w-7 md:w-9" src="../../assets/My project (2).png" alt="">
+      <p class="text-white md:mt-1 text-sm">50.28℃</p>
+    </div>
+    <div class="flex mt-4 md:mt-2">
+      <img class="w-7 md:w-9" src="../../assets/My project (3).png" alt="">
+      <p class="text-white md:mt-1 text-sm">40.28℃</p>
+    </div>
+  </div>
+  <div>
+
+  </div>
+</div> -->
+
+<!-- 3 -->
+
+<!-- <div class="bg-slate-700/50  ml-4 md:ml-8 md:w-[530px] rounded-md w-[355px] h-24">
+  <div class="ml-7 pt-6">
+    <p class="font-semibold text-white">Wednesday</p>
+    <img class="md:w-10 w-8 ml-[-10px] md:ml-[-10px] " src="../../assets/cloud-3.png" alt="">
+    <p class="font-extralight text-white ml-7 md:ml-9 md:mt-[-33px] mt-[-30px]">light rain</p>
+  </div>
+  <div class="md:ml-64 ml-44  mt-[-70px]">
+    <div class="flex mt-2">
+      <img class="w-7 md:w-9" src="../../assets/My project.png" alt="">
+      <p class="text-white md:mt-1 text-sm">20.28℃</p>
+    </div>
+    <div class="flex mt-4 md:mt-2">
+      <img class="w-7 md:w-9" src="../../assets/My project (1).png" alt="">
+      <p class="text-white md:mt-1 text-sm">20.28℃</p>
+    </div>
+  </div>
+  <div class="md:ml-96 ml-64  mt-[-72px]">
+    <div class="flex mt-2">
+      <img class="w-7 md:w-9" src="../../assets/My project (2).png" alt="">
+      <p class="text-white md:mt-1 text-sm">50.28℃</p>
+    </div>
+    <div class="flex mt-4 md:mt-2">
+      <img class="w-7 md:w-9" src="../../assets/My project (3).png" alt="">
+      <p class="text-white md:mt-1 text-sm">40.28℃</p>
+    </div>
+  </div>
+  <div>
+
+  </div>
+</div> -->
+
+<!-- 4 -->
+
+<!-- <div class="bg-slate-700/50  ml-4 md:ml-8 md:w-[530px] rounded-md w-[355px] h-24">
+  <div class="ml-7 pt-6">
+    <p class="font-semibold text-white">Wednesday</p>
+    <img class="md:w-10 w-8 ml-[-10px] md:ml-[-10px] " src="../../assets/cloud-3.png" alt="">
+    <p class="font-extralight text-white ml-7 md:ml-9 md:mt-[-33px] mt-[-30px]">light rain</p>
+  </div>
+  <div class="md:ml-64 ml-44  mt-[-70px]">
+    <div class="flex mt-2">
+      <img class="w-7 md:w-9" src="../../assets/My project.png" alt="">
+      <p class="text-white md:mt-1 text-sm">20.28℃</p>
+    </div>
+    <div class="flex mt-4 md:mt-2">
+      <img class="w-7 md:w-9" src="../../assets/My project (1).png" alt="">
+      <p class="text-white md:mt-1 text-sm">20.28℃</p>
+    </div>
+  </div>
+  <div class="md:ml-96 ml-64  mt-[-72px]">
+    <div class="flex mt-2">
+      <img class="w-7 md:w-9" src="../../assets/My project (2).png" alt="">
+      <p class="text-white md:mt-1 text-sm">50.28℃</p>
+    </div>
+    <div class="flex mt-4 md:mt-2">
+      <img class="w-7 md:w-9" src="../../assets/My project (3).png" alt="">
+      <p class="text-white md:mt-1 text-sm">40.28℃</p>
+    </div>
+  </div>
+  <div>
+
+  </div>
+</div> -->
+</div>
+
+</div>
+<br><br>
+</div>
+
+</div>
